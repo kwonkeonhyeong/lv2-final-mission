@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import java.util.Optional;
+
 @Component
 public class AuthorizationInterceptor implements HandlerInterceptor {
 
@@ -21,15 +23,15 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        String token = cookieTokenAuthorizationHandler.getToken(request);
+        Optional<String> token = cookieTokenAuthorizationHandler.getToken(request);
         if (token.isEmpty()) {
             request.setAttribute("authorizationPayload", null);
             return true;
         }
 
-        jwtAuthorizationProvider.validateToken(token);
+        jwtAuthorizationProvider.validateToken(token.get());
 
-        AuthorizationPayload payload = jwtAuthorizationProvider.getPayload(token);
+        AuthorizationPayload payload = jwtAuthorizationProvider.getPayload(token.get());
         request.setAttribute("authorizationPayload", payload);
         return true;
     }

@@ -24,7 +24,7 @@ spring:
 
 
 jwt:
-  secret-key: WXmohJMCvigQggaEypa5E=Yn2kjibddFAWtnPJ2AFlL8
+  secret-key: testSecretKey20230327testSecretKey20230327testSecretKey20230327
   validity-in-milliseconds: 1800000
 cookie:
   max-age: 1800
@@ -49,7 +49,7 @@ spring:
 
 
 jwt:
-  secret-key: WXmohJMCvigQggaEypa5E=Yn2kjibddFAWtnPJ2AFlL8
+  secret-key: testSecretKey20230327testSecretKey20230327testSecretKey20230327
   validity-in-milliseconds: 1800000
 
 cookie:

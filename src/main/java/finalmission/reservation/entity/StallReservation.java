@@ -1,6 +1,6 @@
-package finalmission.stall.entity;
+package finalmission.reservation.entity;
 
-import finalmission.toilet.entity.Toilet;
+import finalmission.toilet.entity.Stall;
 import finalmission.user.entity.Member;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,7 +11,7 @@ import jakarta.persistence.ManyToOne;
 import java.util.Objects;
 
 @Entity
-public class Stall {
+public class StallReservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,12 +22,19 @@ public class Stall {
     private String status;
 
     @ManyToOne
-    private Toilet toilet;
+    private Stall stall;
 
     @ManyToOne
     private Member member;
 
-    protected Stall() {}
+    protected StallReservation() {}
+
+    public StallReservation(String warriorName, String status, Stall stall, Member member) {
+        this.warriorName = warriorName;
+        this.status = status;
+        this.stall = stall;
+        this.member = member;
+    }
 
     public Long getId() {
         return id;
@@ -41,8 +48,8 @@ public class Stall {
         return status;
     }
 
-    public Toilet getToilet() {
-        return toilet;
+    public Stall getToilet() {
+        return stall;
     }
 
     public Member getUser() {
@@ -51,8 +58,8 @@ public class Stall {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof Stall stall)) return false;
-        return Objects.equals(id, stall.id);
+        if (!(o instanceof StallReservation stallReservation)) return false;
+        return Objects.equals(id, stallReservation.id);
     }
 
     @Override

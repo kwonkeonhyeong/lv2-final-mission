@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import java.util.Objects;
 
 @Entity
-public class Toilet {
+public class Stall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,7 +17,12 @@ public class Toilet {
 
     private String status;
 
-    protected Toilet() {}
+    protected Stall() {}
+
+    public Stall(String name, String status) {
+        this.name = name;
+        this.status = status;
+    }
 
     public Long getId() {
         return id;
@@ -33,8 +38,8 @@ public class Toilet {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof Toilet toilet)) return false;
-        return Objects.equals(id, toilet.id);
+        if (!(o instanceof Stall stall)) return false;
+        return Objects.equals(id, stall.id);
     }
 
     @Override

@@ -6,21 +6,24 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 @Component
 public class CookieTokenAuthorizationHandler {
 
     private static final String TOKEN_NAME = "token";
 
-    public String getToken(HttpServletRequest request) {
+    public Optional<String> getToken(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         if (cookies == null) {
-            return null;
+            return Optional.empty();
         }
-        return Arrays.stream(cookies).filter(cookie -> cookie.getName().equals(TOKEN_NAME))
+        String token = Arrays.stream(cookies).filter(cookie -> cookie.getName().equals(TOKEN_NAME))
                 .map(Cookie::getValue)
                 .findFirst()
                 .orElse(null);
+
+        return Optional.ofNullable(token);
     }
 
     public void setToken(HttpServletResponse response, String token) {
