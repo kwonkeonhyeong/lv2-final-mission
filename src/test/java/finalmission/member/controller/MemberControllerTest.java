@@ -2,7 +2,6 @@ package finalmission.member.controller;
 
 import finalmission.member.controller.dto.LoginRequest;
 import finalmission.member.controller.dto.SignUpRequest;
-import finalmission.member.repository.MemberRepository;
 import finalmission.member.service.MemberService;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.Test;
@@ -19,8 +18,6 @@ class MemberControllerTest {
 
     @Autowired
     private MemberService memberService;
-    @Autowired
-    private MemberRepository memberRepository;
 
     @Test
     void 회원가입_요청_API_테스트() {
