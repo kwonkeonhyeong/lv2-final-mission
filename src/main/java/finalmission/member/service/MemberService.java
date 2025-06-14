@@ -1,5 +1,6 @@
 package finalmission.member.service;
 
+import finalmission.exception.ConflictException;
 import finalmission.exception.UnauthorizedException;
 import finalmission.member.controller.dto.request.LoginRequest;
 import finalmission.member.controller.dto.request.SignUpRequest;
@@ -18,9 +19,17 @@ public class MemberService {
     }
 
     public SignUpResponse signup(SignUpRequest signUpRequest) {
+        validateConflict(signUpRequest.nickname());
         Member member = signUpRequest.toMember();
         Member savedMember = memberRepository.save(member);
         return SignUpResponse.from(savedMember);
+    }
+
+    private void validateConflict(String nickname) {
+        boolean isExist = memberRepository.findByNickname(nickname).isPresent();
+        if (isExist) {
+            throw new ConflictException("이미 존재하는 유저입니다");
+        }
     }
 
     public void login(LoginRequest loginRequest) {

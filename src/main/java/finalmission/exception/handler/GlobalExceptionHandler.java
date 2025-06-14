@@ -1,5 +1,6 @@
 package finalmission.exception.handler;
 
+import finalmission.exception.ConflictException;
 import finalmission.exception.UnauthorizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,5 +31,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UnauthorizedException.class)
     public ResponseEntity<Void> handleUnauthorizedException(UnauthorizedException exception) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+    // todo : 에러 예외 폼 통일
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<Void> handleConflictException(ConflictException exception) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 }

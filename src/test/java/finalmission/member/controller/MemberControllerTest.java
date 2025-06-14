@@ -34,6 +34,25 @@ class MemberControllerTest {
     }
 
     @Test
+    void 이미_존재하는_멤버_회원가입_요청_테스트() {
+        String nickname = "testUser";
+        String password = "1234";
+
+        SignUpRequest signUpRequest = new SignUpRequest(nickname, password);
+        memberService.signup(signUpRequest);
+
+        SignUpRequest request = new SignUpRequest("testUser", "1234");
+
+        RestAssured.given().log().all()
+                .contentType("application/json")
+                .body(request)
+                .when().post("/signup")
+                .then().log().all()
+                .statusCode(HttpStatus.CONFLICT.value());
+    }
+
+
+    @Test
     void 로그인_요청_API_테스트() {
         String nickname = "testUser";
         String password = "1234";
