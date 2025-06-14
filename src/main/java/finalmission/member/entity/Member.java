@@ -1,4 +1,4 @@
-package finalmission.toilet.entity;
+package finalmission.member.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,38 +8,39 @@ import jakarta.persistence.Id;
 import java.util.Objects;
 
 @Entity
-public class Stall {
+public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String nickname;
 
-    private String status;
+    private String password;
 
-    protected Stall() {}
+    protected Member() {
+    }
 
-    public Stall(String name, String status) {
-        this.name = name;
-        this.status = status;
+    public Member(String nickname, String password) {
+        this.nickname = nickname;
+        this.password = password;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getNickname() {
+        return nickname;
     }
 
-    public String getStatus() {
-        return status;
+    public String getPassword() {
+        return password;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof Stall stall)) return false;
-        return Objects.equals(id, stall.id);
+        if (!(o instanceof Member member)) return false;
+        return Objects.equals(id, member.id);
     }
 
     @Override
