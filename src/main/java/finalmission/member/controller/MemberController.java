@@ -1,10 +1,12 @@
 package finalmission.member.controller;
 
+import finalmission.member.controller.dto.LoginRequest;
 import finalmission.member.controller.dto.SignUpRequest;
 import finalmission.member.controller.dto.SignUpResponse;
 import finalmission.member.service.MemberService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -20,5 +22,11 @@ public class MemberController {
     public ResponseEntity<SignUpResponse> signup(SignUpRequest signUpRequest) {
         SignUpResponse response = memberService.signup(signUpRequest);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Void> login(@RequestBody LoginRequest loginRequest) {
+        memberService.login(loginRequest);
+        return ResponseEntity.noContent().build();
     }
 }

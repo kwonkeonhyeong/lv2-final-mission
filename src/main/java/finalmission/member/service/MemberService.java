@@ -1,5 +1,7 @@
 package finalmission.member.service;
 
+import finalmission.exception.NotFoundException;
+import finalmission.member.controller.dto.LoginRequest;
 import finalmission.member.controller.dto.SignUpRequest;
 import finalmission.member.controller.dto.SignUpResponse;
 import finalmission.member.entity.Member;
@@ -20,4 +22,11 @@ public class MemberService {
         Member savedMember = memberRepository.save(member);
         return SignUpResponse.from(savedMember);
     }
+
+    public void login(LoginRequest loginRequest) {
+        String nickname = loginRequest.nickname();
+        memberRepository.findByNickname(nickname)
+                .orElseThrow(() -> new NotFoundException("사용자를 찾을 수 없습니다"));
+    }
+
 }
