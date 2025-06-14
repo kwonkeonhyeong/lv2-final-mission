@@ -1,8 +1,8 @@
 package finalmission.member.controller;
 
-import finalmission.member.controller.dto.LoginRequest;
-import finalmission.member.controller.dto.SignUpRequest;
-import finalmission.member.controller.dto.SignUpResponse;
+import finalmission.member.controller.dto.request.LoginRequest;
+import finalmission.member.controller.dto.request.SignUpRequest;
+import finalmission.member.controller.dto.response.SignUpResponse;
 import finalmission.member.service.MemberService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

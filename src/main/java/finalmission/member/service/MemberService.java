@@ -1,9 +1,9 @@
 package finalmission.member.service;
 
-import finalmission.exception.NotFoundException;
-import finalmission.member.controller.dto.LoginRequest;
-import finalmission.member.controller.dto.SignUpRequest;
-import finalmission.member.controller.dto.SignUpResponse;
+import finalmission.exception.UnauthorizedException;
+import finalmission.member.controller.dto.request.LoginRequest;
+import finalmission.member.controller.dto.request.SignUpRequest;
+import finalmission.member.controller.dto.response.SignUpResponse;
 import finalmission.member.entity.Member;
 import finalmission.member.repository.MemberRepository;
 import org.springframework.stereotype.Service;
@@ -25,8 +25,16 @@ public class MemberService {
 
     public void login(LoginRequest loginRequest) {
         String nickname = loginRequest.nickname();
-        memberRepository.findByNickname(nickname)
-                .orElseThrow(() -> new NotFoundException("사용자를 찾을 수 없습니다"));
+        String password = loginRequest.password();
+        validateLoginInfo(nickname, password);
     }
 
+    private void validateLoginInfo(String nickname, String password) {
+        Member findMember = memberRepository.findByNickname(nickname)
+                .orElseThrow(() -> new UnauthorizedException("사용자를 찾을 수 없습니다"));
+
+        if (findMember.invalidLoginInfo(nickname, password)) {
+            throw new UnauthorizedException("로그인 정보가 올바르지 않습니다");
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package finalmission.member.controller.dto;
+package finalmission.member.controller.dto.response;
 
 import finalmission.member.entity.Member;
 

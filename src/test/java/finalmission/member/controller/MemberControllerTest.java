@@ -1,10 +1,12 @@
 package finalmission.member.controller;
 
-import finalmission.member.controller.dto.LoginRequest;
-import finalmission.member.controller.dto.SignUpRequest;
+import finalmission.member.controller.dto.request.LoginRequest;
+import finalmission.member.controller.dto.request.SignUpRequest;
 import finalmission.member.service.MemberService;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
@@ -47,5 +49,21 @@ class MemberControllerTest {
                 .when().post("/login")
                 .then().log().all()
                 .statusCode(HttpStatus.NO_CONTENT.value());
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"testUser, 하나둘셋넷", "testUser1,1234"})
+    void 잘못된_로그인_정보_요청_테스트(String nickname, String password) {
+        SignUpRequest signUpRequest = new SignUpRequest("testUser", "1234");
+        memberService.signup(signUpRequest);
+
+        LoginRequest loginRequest = new LoginRequest(nickname, password);
+
+        RestAssured.given().log().all()
+                .contentType("application/json")
+                .body(loginRequest)
+                .when().post("/login")
+                .then().log().all()
+                .statusCode(HttpStatus.UNAUTHORIZED.value());
     }
 }

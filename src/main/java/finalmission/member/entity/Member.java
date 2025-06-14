@@ -25,6 +25,10 @@ public class Member {
         this.password = password;
     }
 
+    public boolean invalidLoginInfo(String nickname, String password) {
+        return !(this.nickname.equals(nickname) && this.password.equals(password));
+    }
+
     public Long getId() {
         return id;
     }
