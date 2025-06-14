@@ -1,0 +1,24 @@
+package finalmission.member.controller;
+
+import finalmission.member.controller.dto.SignUpRequest;
+import finalmission.member.controller.dto.SignUpResponse;
+import finalmission.member.service.MemberService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class MemberController {
+
+    private final MemberService memberService;
+
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<SignUpResponse> signup(SignUpRequest signUpRequest) {
+        SignUpResponse response = memberService.signup(signUpRequest);
+        return ResponseEntity.ok(response);
+    }
+}
