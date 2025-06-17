@@ -12,10 +12,10 @@ spring:
         ddl-auto: create-drop
     defer-datasource-initialization: true
 
-#  sql:
-#    init:
-#      mode: always
-#      data-locations: classpath:data.sql
+  #  sql:
+  #    init:
+  #      mode: always
+  #      data-locations: classpath:data.sql
 
   h2.console:
     enabled: true
@@ -23,11 +23,12 @@ spring:
   datasource.url: jdbc:h2:mem:database
 
 
-jwt:
-  secret-key: testSecretKey20230327testSecretKey20230327testSecretKey20230327
-  validity-in-milliseconds: 1800000
-cookie:
-  max-age: 1800
+auth:
+  jwt:
+    secret-key: WXmohJMCvigQggaEypa5E=Yn2kjibddFAWtnPJ2AFlL8
+    valid-time: 1800000
+  cookie:
+    max-age: 1800
 
 ---
 
@@ -48,10 +49,10 @@ spring:
 
 
 
-jwt:
-  secret-key: testSecretKey20230327testSecretKey20230327testSecretKey20230327
-  validity-in-milliseconds: 1800000
-
-cookie:
-  max-age: 1800
+auth:
+  jwt:
+    secret-key: WXmohJMCvigQggaEypa5E=Yn2kjibddFAWtnPJ2AFlL8
+    valid-time: 1800000
+  cookie:
+    max-age: 1800
 

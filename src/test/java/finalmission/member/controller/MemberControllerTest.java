@@ -67,7 +67,7 @@ class MemberControllerTest {
                 .body(loginRequest)
                 .when().post("/login")
                 .then().log().all()
-                .statusCode(HttpStatus.NO_CONTENT.value());
+                .statusCode(HttpStatus.OK.value());
     }
 
     @ParameterizedTest

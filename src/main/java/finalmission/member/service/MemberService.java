@@ -1,5 +1,6 @@
 package finalmission.member.service;
 
+import finalmission.auth.provider.JwtTokenProvider;
 import finalmission.exception.ConflictException;
 import finalmission.exception.UnauthorizedException;
 import finalmission.member.controller.dto.request.LoginRequest;
@@ -13,9 +14,11 @@ import org.springframework.stereotype.Service;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    public MemberService(MemberRepository memberRepository) {
+    public MemberService(MemberRepository memberRepository, JwtTokenProvider jwtTokenProvider) {
         this.memberRepository = memberRepository;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     public SignUpResponse signup(SignUpRequest signUpRequest) {
@@ -32,16 +35,20 @@ public class MemberService {
         }
     }
 
-    public void login(LoginRequest loginRequest) {
+    public String login(LoginRequest loginRequest) {
         String nickname = loginRequest.nickname();
         String password = loginRequest.password();
-        validateLoginInfo(nickname, password);
-    }
 
-    private void validateLoginInfo(String nickname, String password) {
         Member findMember = memberRepository.findByNickname(nickname)
                 .orElseThrow(() -> new UnauthorizedException("사용자를 찾을 수 없습니다"));
 
+        validateLoginInfo(findMember, nickname, password);
+
+        String payload = findMember.getId().toString();
+        return jwtTokenProvider.createToken(payload);
+    }
+
+    private void validateLoginInfo(Member findMember, String nickname, String password) {
         if (findMember.invalidLoginInfo(nickname, password)) {
             throw new UnauthorizedException("로그인 정보가 올바르지 않습니다");
         }
