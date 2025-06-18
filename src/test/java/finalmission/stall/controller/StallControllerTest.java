@@ -7,6 +7,8 @@ import finalmission.stall.controller.dto.request.StallCreateRequest;
 import finalmission.stall.controller.dto.response.StallCreateResponse;
 import finalmission.stall.controller.dto.response.StallInfosResponse;
 import finalmission.stall.service.StallService;
+import finalmission.stallstatus.controller.dto.request.StallStatusCreateRequest;
+import finalmission.stallstatus.controller.dto.response.StallStatusCreateResponse;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +50,28 @@ class StallControllerTest {
         String token = getToken();
 
         StallCreateRequest request = new StallCreateRequest("1사로");
-        stallService.create(request);
+
+        StallCreateResponse stallCreateResponse = RestAssured.given().log().all()
+                .contentType("application/json")
+                .cookie("token", token)
+                .body(request)
+                .when().post("/stalls")
+                .then().log().all()
+                .statusCode(HttpStatus.CREATED.value())
+                .extract()
+                .body().as(StallCreateResponse.class);
+
+        StallStatusCreateRequest stallStatusCreateRequest = new StallStatusCreateRequest(stallCreateResponse.id());
+
+        RestAssured.given().log().all()
+                .contentType("application/json")
+                .cookie("token", token)
+                .body(stallStatusCreateRequest)
+                .when().post("/status")
+                .then().log().all()
+                .statusCode(HttpStatus.CREATED.value())
+                .extract()
+                .body().as(StallStatusCreateResponse.class);
 
         StallInfosResponse stallInfosResponse = RestAssured.given().log().all()
                 .cookie("token", token)
@@ -59,6 +82,7 @@ class StallControllerTest {
                 .body().as(StallInfosResponse.class);
 
         assertThat(stallInfosResponse.stallInfos().size()).isEqualTo(1);
+        assertThat(stallInfosResponse.stallInfos().getFirst().stallStatusFindResponses().size()).isEqualTo(1);
     }
 
     @Test

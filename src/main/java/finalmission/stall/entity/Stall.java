@@ -1,10 +1,14 @@
 package finalmission.stall.entity;
 
+import finalmission.stallstatus.entity.StallStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,6 +18,9 @@ public class Stall {
     private Long id;
 
     private String name;
+
+    @OneToMany(mappedBy = "stall")
+    private List<StallStatus> stallStatuses = new ArrayList<>();
 
     protected Stall() {
     }
@@ -28,6 +35,10 @@ public class Stall {
 
     public String getName() {
         return name;
+    }
+
+    public List<StallStatus> getStallStatuses() {
+        return stallStatuses;
     }
 
     @Override

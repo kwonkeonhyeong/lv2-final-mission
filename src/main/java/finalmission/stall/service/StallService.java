@@ -38,7 +38,7 @@ public class StallService {
 
     public StallInfosResponse findStalls() {
         List<Stall> stalls = stallRepository.findAll();
-        List<StallInfoResponse> mapToResponse = stalls.stream().map(StallInfoResponse::new).toList();
+        List<StallInfoResponse> mapToResponse = stalls.stream().map(StallInfoResponse::from).toList();
         return new StallInfosResponse(mapToResponse);
     }
 
