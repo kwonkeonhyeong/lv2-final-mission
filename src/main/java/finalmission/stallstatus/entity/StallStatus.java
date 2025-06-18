@@ -21,6 +21,8 @@ public class StallStatus {
 
     private String randomNickname;
 
+    private Status status;
+
     @ManyToOne
     private Member member;
 
@@ -30,9 +32,20 @@ public class StallStatus {
     protected StallStatus() {
     }
 
-    public StallStatus(Long id, LocalDateTime createAt) {
-        this.id = id;
-        this.createAt = createAt;
+    public StallStatus(String randomNickname, Member member, Stall stall) {
+        this.createAt = LocalDateTime.now();
+        this.randomNickname = randomNickname;
+        this.member = member;
+        this.stall = stall;
+        this.status = Status.USING;
+    }
+
+    public void changeStallStatus() {
+        if (this.status == Status.PENDING) {
+            this.status = Status.USING;
+        } else {
+            this.status = Status.PENDING;
+        }
     }
 
     public Long getId() {
@@ -41,6 +54,22 @@ public class StallStatus {
 
     public LocalDateTime getCreateAt() {
         return createAt;
+    }
+
+    public String getRandomNickname() {
+        return randomNickname;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public Stall getStall() {
+        return stall;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 
     @Override

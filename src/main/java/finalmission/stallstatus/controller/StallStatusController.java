@@ -1,12 +1,29 @@
 package finalmission.stallstatus.controller;
 
+import finalmission.auth.resolver.Authenticated;
+import finalmission.auth.resolver.MemberPrincipal;
+import finalmission.stallstatus.controller.dto.request.StallStatusCreateRequest;
+import finalmission.stallstatus.controller.dto.response.StallStatusCreateResponse;
+import finalmission.stallstatus.service.StallStatusService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/StallStatus")
+@RequestMapping("/status")
 public class StallStatusController {
-    // 사로 클릭 시 클릭
-    // 사로 사용 여부 판단
-    // 각 상황에 맞는 로직 수행
+
+    private final StallStatusService stallStatusService;
+
+    public StallStatusController(StallStatusService stallStatusService) {
+        this.stallStatusService = stallStatusService;
+    }
+
+    @PostMapping
+    public ResponseEntity<StallStatusCreateResponse> postStallStatus(@RequestBody StallStatusCreateRequest request, @Authenticated MemberPrincipal principal) {
+        StallStatusCreateResponse response = stallStatusService.create(request, principal.memberId());
+        return ResponseEntity.ok(response);
+    }
 }
