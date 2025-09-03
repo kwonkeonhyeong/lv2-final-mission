@@ -13,9 +13,6 @@ jobs:
   test:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./server
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -47,9 +44,6 @@ jobs:
   build-and-push:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./server
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -91,8 +85,7 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v5
         with:
-          context: ./server
-          file: ./server/Dockerfile
+          file: ./Dockerfile
           push: true
           platforms: linux/arm64
           tags: |
