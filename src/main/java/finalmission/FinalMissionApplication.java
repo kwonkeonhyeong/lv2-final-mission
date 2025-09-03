@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class FinalMissionApplication {
-    // ci cd
+    // ci cd test
     public static void main(String[] args) {
         SpringApplication.run(FinalMissionApplication.class, args);
     }
