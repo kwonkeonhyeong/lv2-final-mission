@@ -53,7 +53,7 @@ jobs:
           cd /home/ubuntu/mission
           
           echo "Deploying with image tag: $IMAGE_TAG"
-          sudo -E docker compose up --no-deps -d app
+          sudo -E docker compose -f docker-compose.prod.server.yml up --no-deps -d app
           
           echo "=== Checking if image exists locally ==="
           sudo docker images | grep "$DOCKER_REPO" || echo "No local images found for $DOCKER_REPO"
